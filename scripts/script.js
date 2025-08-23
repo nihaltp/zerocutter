@@ -1,4 +1,6 @@
-let playerCount = 0;
+import { hidePlayerInput, triangleClick } from "./events.js";
+
+export let playerCount = 0;
 let triangleSize = 0;
 let currentPlayer = 1;
 export let players = [];
@@ -18,30 +20,10 @@ window.onload = () => {
     const messageTriangle = document.getElementById("messageTriangle");
 
     // Step 1: Show input field when OK is clicked
-    okBtn.addEventListener("click", () => {
-        okBtn.style.display = "none";
-        playerInputDiv.classList.remove("hidden");
-    });
+    okBtn.addEventListener("click", () => hidePlayerInput(okBtn, playerInputDiv));
 
     // Step 2: Validate players, then go to triangle popup
-    nextBtn.addEventListener("click", () => {
-        playerCount = parseInt(document.getElementById("players").value);
-        if (playerCount && playerCount > 0) {
-            players = Array.from({ length: playerCount }, (_, i) => ({
-                name: `Player ${i+1}`,
-                score: 0,
-                color: getRandomColor()
-            }));
-            setTimeout(() => {
-                popupPlayers.classList.add("hidden");
-                popupTriangle.classList.remove("hidden");
-            }, 1000);
-        } else {
-            messagePlayers.textContent = "⚠️ Please enter a valid number of players.";
-            messagePlayers.style.color = "#ff8a8a";
-            messagePlayers.style.display = "block";
-        }
-    });
+    nextBtn.addEventListener("click", () => triangleClick(popupPlayers, popupTriangle, messagePlayers));
 
     // Step 3: Validate triangle size, then start game
     startBtn.addEventListener("click", () => {
@@ -65,7 +47,7 @@ window.onload = () => {
 };
 
 // Utility: Random pastel color for players
-function getRandomColor() {
+export function getRandomColor() {
     const hue = Math.floor(Math.random() * 360);
     return `hsl(${hue}, 70%, 60%)`;
 }
@@ -134,4 +116,12 @@ function renderTriangle() {
 export function updateCurrentPlayer() {
     document.getElementById("currentPlayerName").textContent = players[currentPlayer-1].name;
     document.getElementById("currentPlayerColor").style.background = players[currentPlayer-1].color;
+}
+
+export function setPlayerCount(count) {
+    playerCount = count;
+}
+
+export function setPlayers(newPlayers) {
+    players = newPlayers;
 }
