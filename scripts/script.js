@@ -1,7 +1,7 @@
 let playerCount = 0;
 let triangleSize = 0;
 let currentPlayer = 1;
-let players = [];
+export let players = [];
 
 // Popup logic remains same as before for players & triangle input
 window.onload = () => {
@@ -71,7 +71,7 @@ function getRandomColor() {
 }
 
 // Render Player Table
-function renderPlayerTable() {
+export function renderPlayerTable() {
     const table = document.getElementById("playerTable");
     table.innerHTML = `
         <tr>
@@ -131,34 +131,7 @@ function renderTriangle() {
 }
 
 // Update Current Player Display
-function updateCurrentPlayer() {
+export function updateCurrentPlayer() {
     document.getElementById("currentPlayerName").textContent = players[currentPlayer-1].name;
     document.getElementById("currentPlayerColor").style.background = players[currentPlayer-1].color;
-}
-
-// Edit Player Name
-function editPlayerName(index) {
-    const newName = prompt("Enter new name:", players[index].name);
-    if (newName) {
-        players[index].name = newName;
-        renderPlayerTable();
-        updateCurrentPlayer();
-    }
-}
-
-// Change Player Color
-function changePlayerColor(index) {
-    const input = document.createElement("input");
-    input.type = "color";
-    input.value = players[index].color;
-    input.click();
-    input.addEventListener("input", () => {
-        if (players.some((p, i) => i !== index && p.color === input.value)) {
-            alert("⚠️ This color is already taken. Choose another.");
-        } else {
-            players[index].color = input.value;
-            renderPlayerTable();
-            updateCurrentPlayer();
-        }
-    });
 }
