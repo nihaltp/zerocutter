@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Game Website</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <script src="https://kit.fontawesome.com/c3cff5abce.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Popup 1: Players -->
+    <div class="popup" id="popupPlayers">
+        <div class="popup-content">
+            <h2>🎮 Welcome to Zero Cutter!</h2>
+            <p>
+                Zero Cutter is a multiplayer strategy game. <br><br>
+                ➡️ On each turn, you can mark one circle. <br>
+                ➡️ If you mark the <b>last circle</b> in any row, column, or diagonal, you earn points. <br>
+                ➡️ The game continues until there are no circles left. <br>
+                ➡️ The player with the <b>highest score</b> at the end wins! 🏆
+            </p>
+            <button id="okBtn">OK</button>
+            <div id="playerInput" class="hidden">
+                <label for="players">Enter number of players:</label>
+                <input type="number" id="players" min="1" placeholder="e.g. 2">
+                <button id="nextBtn">Next</button>
+            </div>
+            <p id="messagePlayers" class="message"></p>
+        </div>
+    </div>
+
+    <!-- Popup 2: Triangle Size -->
+    <div class="popup hidden" id="popupTriangle">
+        <div class="popup-content">
+            <h2>🔺 Triangle Setup</h2>
+            <p>Now, choose the size of the triangle for the game.</p>
+            <label for="triangleSize">Enter triangle size:</label>
+            <input type="number" id="triangleSize" min="2" placeholder="e.g. 5">
+            <button id="startBtn">Start Game</button>
+            <p id="messageTriangle" class="message"></p>
+        </div>
+    </div>
+
+    <!-- Main Game Layout -->
+    <div class="container hidden" id="gameBoard">
+        <!-- Left: Player Table -->
+        <div class="left-panel" id="playerTableContainer">
+            <table id="playerTable"></table>
+        </div>
+
+        <!-- Center: Triangle -->
+        <div class="center-panel" id="triangleContainer"></div>
+
+        <!-- Right: Current Player + Undo/Redo -->
+        <div class="right-panel">
+            <div class="current-player" id="currentPlayerDisplay">
+                <p><strong>Current Player:</strong></p>
+                <div class="player-info">
+                    <span id="currentPlayerName">Player 1</span>
+                    <span class="color-box" id="currentPlayerColor"></span>
+                </div>
+            </div>
+            <div class="actions">
+                <button class="btn" id="undoBtn"><i class="fa-solid fa-rotate-left"></i> Undo</button>
+                <button class="btn" id="redoBtn"><i class="fa-solid fa-rotate-right"></i> Redo</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
