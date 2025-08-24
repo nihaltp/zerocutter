@@ -2,9 +2,10 @@ import { okBtn } from "./elements.js";
 import { hidePlayerInput } from "./events.js";
 
 export let playerCount = 0;
-let triangleSize = 0;
+export let triangleSize = 0;
 let currentPlayer = 1;
 export let players = [];
+export let triangleSets = []
 
 // Popup logic remains same as before for players & triangle input
 window.onload = () => {
@@ -70,10 +71,9 @@ export function renderTriangle() {
 
                 // Remove this listener (circle can't be clicked again)
                 circle.removeEventListener("click", handleClick);
-
-                // Switch to next player
-                currentPlayer = (currentPlayer % playerCount) + 1;
-                updateCurrentPlayer();
+                
+                // Check the layers with this circle & update score
+                processCircleClick(triangleSets, circle.dataset.id, players[currentPlayer - 1]);
             });
 
             rowDiv.appendChild(circle);
@@ -81,6 +81,41 @@ export function renderTriangle() {
 
         container.appendChild(rowDiv);
     }
+}
+
+/**
+ * Process a number click: remove from all layers, check for empty layers, update score
+ * @param {Array} sets - Array containing 3 sets of layers
+ * @param {string|number} num - Circle/Number clicked
+ * @param {Object} player - The current player object {name, score, color}
+ */
+function processCircleClick(sets, num, player) {
+    const value = String(num);
+    let score = 0;
+    
+    sets.forEach((set, setIndex) => {
+        // Iterate backward so we can remove layers safely
+        for (let i = set.length - 1; i >= 0; i--) {
+            const layer = set[i];
+            
+            // Remove the circle/number from the layer
+            layer.circles.delete(value);
+            
+            // If layer is now empty, award points and remove layer
+            if (layer.circles.size === 0) {
+                score += layer.originalSize;
+                set.splice(i, 1);
+            }
+        }
+    });
+    
+    // Add the points to the player
+    player.score += score;
+    renderPlayerTable();
+    
+    // Switch to next player
+    if (score === 0) currentPlayer = (currentPlayer % playerCount) + 1;
+    updateCurrentPlayer();
 }
 
 // Update Current Player Display
@@ -95,4 +130,12 @@ export function setPlayerCount(count) {
 
 export function setPlayers(newPlayers) {
     players = newPlayers;
+}
+
+export function setTriangleSize(size) {
+    triangleSize = size;
+}
+
+export function setTriangleSets(sets) {
+    triangleSets = sets;
 }

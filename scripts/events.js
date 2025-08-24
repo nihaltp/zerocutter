@@ -1,3 +1,4 @@
+import { createTriangleSets } from "./game.js";
 import { gameInstructionDiv, okBtn, playerInputDiv, nextBtn, triangleInputDiv, messagePlayers, startBtn, popupPlayers, gameBoard, messageTriangle } from "./elements.js";
 import { playerCount, getRandomColor, setPlayerCount, setPlayers, renderPlayerTable, renderTriangle, triangleSets, triangleSize, updateCurrentPlayer, setTriangleSize, setTriangleSets } from "./script.js";
 
