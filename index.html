@@ -10,36 +10,34 @@
     <script src="https://kit.fontawesome.com/c3cff5abce.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- Popup 1: Players -->
+    <!-- MARK: Popup -->
     <div class="popup" id="popupPlayers">
         <div class="popup-content">
-            <h2>🎮 Welcome to Zero Cutter!</h2>
-            <p>
-                Zero Cutter is a multiplayer strategy game. <br><br>
-                ➡️ On each turn, you can mark one circle. <br>
-                ➡️ If you mark the <b>last circle</b> in any row, column, or diagonal, you earn points. <br>
-                ➡️ The game continues until there are no circles left. <br>
-                ➡️ The player with the <b>highest score</b> at the end wins! 🏆
-            </p>
-            <button id="okBtn">OK</button>
+            <div id="gameInstruction">
+                <h2>🎮 Welcome to Zero Cutter!</h2>
+                <p>
+                    Zero Cutter is a multiplayer strategy game. <br><br>
+                    ➡️ On each turn, you can mark one circle. <br>
+                    ➡️ If you mark the <b>last circle</b> in any row, column, or diagonal, you earn points. <br>
+                    ➡️ The game continues until there are no circles left. <br>
+                    ➡️ The player with the <b>highest score</b> at the end wins! 🏆
+                </p>
+                <button id="okBtn">OK</button>
+            </div>
             <div id="playerInput" class="hidden">
                 <label for="players">Enter number of players:</label>
                 <input type="number" id="players" min="1" placeholder="e.g. 2">
                 <button id="nextBtn">Next</button>
             </div>
             <p id="messagePlayers" class="message"></p>
-        </div>
-    </div>
-
-    <!-- Popup 2: Triangle Size -->
-    <div class="popup hidden" id="popupTriangle">
-        <div class="popup-content">
-            <h2>🔺 Triangle Setup</h2>
-            <p>Now, choose the size of the triangle for the game.</p>
-            <label for="triangleSize">Enter triangle size:</label>
-            <input type="number" id="triangleSize" min="2" placeholder="e.g. 5">
-            <button id="startBtn">Start Game</button>
-            <p id="messageTriangle" class="message"></p>
+            <div id="triangleInput" class="hidden">
+                <h2>🔺 Triangle Setup</h2>
+                <p>Now, choose the size of the triangle for the game.</p>
+                <label for="triangleSize">Enter triangle size:</label>
+                <input type="number" id="triangleSize" min="2" placeholder="e.g. 5">
+                <button id="startBtn">Start Game</button>
+                <p id="messageTriangle" class="message"></p>
+            </div>
         </div>
     </div>
 

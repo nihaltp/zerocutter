@@ -7,39 +7,43 @@ export let players = [];
 
 // Popup logic remains same as before for players & triangle input
 window.onload = () => {
+    const gameInstructionDiv = document.getElementById("gameInstruction");
     const okBtn = document.getElementById("okBtn");
+    
     const playerInputDiv = document.getElementById("playerInput");
     const nextBtn = document.getElementById("nextBtn");
+    
+    const triangleInputDiv = document.getElementById("triangleInput");
     const startBtn = document.getElementById("startBtn");
-
+    
     const popupPlayers = document.getElementById("popupPlayers");
-    const popupTriangle = document.getElementById("popupTriangle");
     const gameBoard = document.getElementById("gameBoard");
-
+    
     const messagePlayers = document.getElementById("messagePlayers");
     const messageTriangle = document.getElementById("messageTriangle");
 
     // Step 1: Show input field when OK is clicked
-    okBtn.addEventListener("click", () => hidePlayerInput(okBtn, playerInputDiv));
+    okBtn.addEventListener("click", () => hidePlayerInput(gameInstructionDiv, okBtn, playerInputDiv));
 
     // Step 2: Validate players, then go to triangle popup
-    nextBtn.addEventListener("click", () => triangleClick(popupPlayers, popupTriangle, messagePlayers));
+    nextBtn.addEventListener("click", () => triangleClick(triangleInputDiv, playerInputDiv, popupPlayers, messagePlayers));
 
     // Step 3: Validate triangle size, then start game
     startBtn.addEventListener("click", () => {
         triangleSize = parseInt(document.getElementById("triangleSize").value);
-        if (triangleSize && triangleSize > 1) {
-            setTimeout(() => {
-                popupTriangle.classList.add("hidden");
-                document.body.style.overflow = "auto";
-                gameBoard.classList.remove("hidden");
+        if (triangleSize && triangleSize > playerCount + 1) {
+            popupPlayers.classList.add("hidden");
+            document.body.style.overflow = "auto";
+            gameBoard.classList.remove("hidden");
 
-                renderPlayerTable();
-                renderTriangle();
-                updateCurrentPlayer();
-            }, 1200);
+            renderPlayerTable();
+            renderTriangle();
+            updateCurrentPlayer();
+            
+            triangleSets = createTriangleSets(triangleSize);
+            console.log("Triangle sets created:", triangleSets);
         } else {
-            messageTriangle.textContent = "⚠️ Please enter a valid triangle size (min 2).";
+            messageTriangle.textContent = "⚠️ Please enter a valid triangle size (min player count + 2): " + (playerCount + 2) + ").";
             messageTriangle.style.color = "#ff8a8a";
             messageTriangle.style.display = "block";
         }
