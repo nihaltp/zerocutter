@@ -59,7 +59,7 @@ export function renderPlayerTable() {
 }
 
 // Render Triangle
-function renderTriangle() {
+export function renderTriangle() {
     const container = document.getElementById("triangleContainer");
     container.innerHTML = "";
     let circleId = 1;
