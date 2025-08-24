@@ -1,4 +1,4 @@
-import { playerCount, getRandomColor, setPlayerCount, setPlayers } from "./script.js";
+import { playerCount, getRandomColor, setPlayerCount, setPlayers, renderPlayerTable, renderTriangle, triangleSets, triangleSize, updateCurrentPlayer, setTriangleSize, setTriangleSets } from "./script.js";
 
 export function hidePlayerInput(gameInstructionDiv, okBtn, playerInputDiv) {
     gameInstructionDiv.classList.add("hidden");
@@ -28,4 +28,23 @@ export function triangleClick(triangleInputDiv, playerInputDiv, popupPlayers, me
     }
     
     nextBtn.removeEventListener("click", () => triangleClick(triangleInputDiv, playerInputDiv, popupPlayers, messagePlayers));
+}
+
+export function startClick(popupPlayers, gameBoard, messageTriangle) {
+    setTriangleSize(parseInt(document.getElementById("triangleSize").value));
+    if (triangleSize && triangleSize > playerCount + 1) {
+        popupPlayers.classList.add("hidden");
+        document.body.style.overflow = "auto";
+        gameBoard.classList.remove("hidden");
+        
+        renderPlayerTable();
+        renderTriangle();
+        updateCurrentPlayer();
+        
+        startBtn.removeEventListener("click", () => startClick(popupPlayers, gameBoard, messageTriangle));
+    } else {
+        messageTriangle.textContent = "⚠️ Please enter a valid triangle size (min player count + 2): " + (playerCount + 2) + ").";
+        messageTriangle.style.color = "#ff8a8a";
+        messageTriangle.style.display = "block";
+    }
 }

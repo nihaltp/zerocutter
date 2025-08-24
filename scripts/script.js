@@ -1,4 +1,4 @@
-import { hidePlayerInput, triangleClick } from "./events.js";
+import { hidePlayerInput, startClick, triangleClick } from "./events.js";
 
 export let playerCount = 0;
 let triangleSize = 0;
@@ -29,25 +29,7 @@ window.onload = () => {
     nextBtn.addEventListener("click", () => triangleClick(triangleInputDiv, playerInputDiv, popupPlayers, messagePlayers));
 
     // Step 3: Validate triangle size, then start game
-    startBtn.addEventListener("click", () => {
-        triangleSize = parseInt(document.getElementById("triangleSize").value);
-        if (triangleSize && triangleSize > playerCount + 1) {
-            popupPlayers.classList.add("hidden");
-            document.body.style.overflow = "auto";
-            gameBoard.classList.remove("hidden");
-
-            renderPlayerTable();
-            renderTriangle();
-            updateCurrentPlayer();
-            
-            triangleSets = createTriangleSets(triangleSize);
-            console.log("Triangle sets created:", triangleSets);
-        } else {
-            messageTriangle.textContent = "⚠️ Please enter a valid triangle size (min player count + 2): " + (playerCount + 2) + ").";
-            messageTriangle.style.color = "#ff8a8a";
-            messageTriangle.style.display = "block";
-        }
-    });
+    startBtn.addEventListener("click", () => startClick(popupPlayers, gameBoard, messageTriangle));
 };
 
 // Utility: Random pastel color for players
