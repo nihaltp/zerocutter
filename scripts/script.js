@@ -112,10 +112,55 @@ function processCircleClick(sets, num, player) {
     // Add the points to the player
     player.score += score;
     renderPlayerTable();
+    checkTotalScore();
     
     // Switch to next player
     if (score === 0) currentPlayer = (currentPlayer % playerCount) + 1;
     updateCurrentPlayer();
+}
+
+/**
+ * Check if all points are scored trigger game end
+ * @param {Array} players - Array of player objects with a 'score' property
+ * @param {number} triangleSize - Size of the triangle
+ * @param {Function} onComplete - Function to call when total score is reached
+ */
+export function checkTotalScore() {
+    // Calculate the total sum of all circles in all three sets
+    let sum = 0;0
+    for (let i = 1; i <= triangleSize; i++) {
+        sum += i; // sum of numbers from 1 to size
+    }
+    sum *= 3; // because there are 3 sets
+    sum -= 3; // because we dont count layers of 1
+    
+    // Calculate current total score
+    const totalScore = players.reduce((acc, player) => acc + player.score, 0);
+    
+    // If total scores match the sum, trigger the function
+    if (totalScore === sum) {
+        showWinner();
+    }
+}
+
+function showWinner() {
+    const popupWinner = document.getElementById("popupWinner");
+    const winnerMessage = document.getElementById("winnerMessage");
+    const winnerColor = document.getElementById("winnerColor");
+    const winnerScore = document.getElementById("winnerScore");
+    
+    let player = players.reduce((prev, curr) => (curr.score > prev.score ? curr : prev), players[0]);
+    
+    winnerMessage.textContent = `Winner: ${player.name}`;
+    winnerColor.style.backgroundColor = player.color;
+    winnerScore.textContent = `Score: ${player.score}`;
+    
+    popupWinner.classList.remove("hidden");
+    
+    const restartBtn = document.getElementById("restartBtn");
+    restartBtn.addEventListener("click", () => {
+        location.reload();
+    });
 }
 
 // Update Current Player Display

@@ -246,3 +246,37 @@ body {
 .circle:hover {
     transform: scale(1.15);
 }
+
+#winnerMessage {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #ffd369;
+}
+
+.winner-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+#winnerScore {
+    font-size: 18px;
+    color: #9effa8;
+}
+
+#restartBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #ffd369;
+    color: #000;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#restartBtn:hover {
+    background: #ffb347;
+}
