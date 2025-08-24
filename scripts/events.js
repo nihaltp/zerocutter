@@ -1,13 +1,27 @@
+import { gameInstructionDiv, okBtn, playerInputDiv, nextBtn, triangleInputDiv, messagePlayers, startBtn, popupPlayers, gameBoard, messageTriangle } from "./elements.js";
 import { playerCount, getRandomColor, setPlayerCount, setPlayers, renderPlayerTable, renderTriangle, triangleSets, triangleSize, updateCurrentPlayer, setTriangleSize, setTriangleSets } from "./script.js";
 
-export function hidePlayerInput(gameInstructionDiv, okBtn, playerInputDiv) {
+export function hidePlayerInput() {
     gameInstructionDiv.classList.add("hidden");
     okBtn.style.display = "none";
     playerInputDiv.classList.remove("hidden");
-    okBtn.removeEventListener("click", () => hidePlayerInput(gameInstructionDiv, okBtn, playerInputDiv));
+
+    okBtn.removeEventListener("click", () => hidePlayerInput());
+    document.removeEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            hidePlayerInput();
+        }
+    });
+    
+    nextBtn.addEventListener("click", () => triangleClick(playerInputDiv));
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            triangleClick(playerInputDiv);
+        }
+    });
 }
 
-export function triangleClick(triangleInputDiv, playerInputDiv, popupPlayers, messagePlayers) {
+export function triangleClick(playerInputDiv) {
     setPlayerCount(parseInt(document.getElementById("players").value));
     
     if (playerCount && playerCount > 0) {
@@ -31,10 +45,23 @@ export function triangleClick(triangleInputDiv, playerInputDiv, popupPlayers, me
         messagePlayers.style.display = "block";
     }
     
-    nextBtn.removeEventListener("click", () => triangleClick(triangleInputDiv, playerInputDiv, popupPlayers, messagePlayers));
+    nextBtn.removeEventListener("click", () => triangleClick(playerInputDiv));
+    document.removeEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            triangleClick(playerInputDiv);
+        }
+    });
+    
+    startBtn.addEventListener("click", () => startClick());
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            startClick();
+        }
+    });
+
 }
 
-export function startClick(popupPlayers, gameBoard, messageTriangle) {
+export function startClick() {
     setTriangleSize(parseInt(document.getElementById("triangleSize").value));
     if (triangleSize && triangleSize > playerCount + 1) {
         popupPlayers.classList.add("hidden");
@@ -45,7 +72,15 @@ export function startClick(popupPlayers, gameBoard, messageTriangle) {
         renderTriangle();
         updateCurrentPlayer();
         
-        startBtn.removeEventListener("click", () => startClick(popupPlayers, gameBoard, messageTriangle));
+        setTriangleSets(createTriangleSets(triangleSize));
+        console.log("Triangle sets created:", triangleSets);
+        
+        startBtn.removeEventListener("click", () => startClick());
+        document.removeEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                startClick();
+            }
+        });
     } else {
         messageTriangle.textContent = "⚠️ Please enter a valid triangle size (min player count + 2): " + (playerCount + 2) + ").";
         messageTriangle.style.color = "#ff8a8a";

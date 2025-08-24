@@ -1,0 +1,10 @@
+export const gameInstructionDiv = document.getElementById("gameInstruction");
+export const okBtn = document.getElementById("okBtn");
+export const playerInputDiv = document.getElementById("playerInput");
+export const triangleInputDiv = document.getElementById("triangleInput");
+export const nextBtn = document.getElementById("nextBtn");
+export const startBtn = document.getElementById("startBtn");
+export const popupPlayers = document.getElementById("popupPlayers");
+export const gameBoard = document.getElementById("gameBoard");
+export const messagePlayers = document.getElementById("messagePlayers");
+export const messageTriangle = document.getElementById("messageTriangle");

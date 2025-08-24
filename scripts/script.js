@@ -1,4 +1,5 @@
-import { hidePlayerInput, startClick, triangleClick } from "./events.js";
+import { okBtn } from "./elements.js";
+import { hidePlayerInput } from "./events.js";
 
 export let playerCount = 0;
 let triangleSize = 0;
@@ -7,29 +8,13 @@ export let players = [];
 
 // Popup logic remains same as before for players & triangle input
 window.onload = () => {
-    const gameInstructionDiv = document.getElementById("gameInstruction");
-    const okBtn = document.getElementById("okBtn");
+    okBtn.addEventListener("click", () => hidePlayerInput());
     
-    const playerInputDiv = document.getElementById("playerInput");
-    const nextBtn = document.getElementById("nextBtn");
-    
-    const triangleInputDiv = document.getElementById("triangleInput");
-    const startBtn = document.getElementById("startBtn");
-    
-    const popupPlayers = document.getElementById("popupPlayers");
-    const gameBoard = document.getElementById("gameBoard");
-    
-    const messagePlayers = document.getElementById("messagePlayers");
-    const messageTriangle = document.getElementById("messageTriangle");
-
-    // Step 1: Show input field when OK is clicked
-    okBtn.addEventListener("click", () => hidePlayerInput(gameInstructionDiv, okBtn, playerInputDiv));
-
-    // Step 2: Validate players, then go to triangle popup
-    nextBtn.addEventListener("click", () => triangleClick(triangleInputDiv, playerInputDiv, popupPlayers, messagePlayers));
-
-    // Step 3: Validate triangle size, then start game
-    startBtn.addEventListener("click", () => startClick(popupPlayers, gameBoard, messageTriangle));
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            hidePlayerInput();
+        }
+    });
 };
 
 // Utility: Random pastel color for players
