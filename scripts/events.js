@@ -20,6 +20,10 @@ export function triangleClick(triangleInputDiv, playerInputDiv, popupPlayers, me
         
         playerInputDiv.classList.add("hidden");
         triangleInputDiv.classList.remove("hidden");
+        
+        const triangleInput = document.getElementById("triangleSize");
+        triangleInput.min = playerCount + 2;  // Change minimum value
+        triangleInput.placeholder = "Eg. " + (playerCount + 2); // Change placeholder
     }
     else {
         messagePlayers.textContent = "⚠️ Please enter a valid number of players.";
