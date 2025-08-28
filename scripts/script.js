@@ -68,6 +68,7 @@ export function renderTriangle() {
 
                 // Set circle color to current player's color
                 circle.style.background = players[currentPlayer - 1].color;
+                circle.classList.add("clicked");
 
                 // Remove this listener (circle can't be clicked again)
                 circle.removeEventListener("click", handleClick);

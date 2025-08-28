@@ -365,6 +365,10 @@ form input[type="number"]::placeholder {
     transform: scale(0.95);
 }
 
+.circle.clicked {
+    transform: scale(1);
+}
+
 .right-panel {
     display: flex;
     flex-direction: column;
