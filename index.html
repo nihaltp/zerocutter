@@ -3,11 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Game Website</title>
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preconnect" href="https://kit.fontawesome.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Scripts with proper loading -->
     <script type="module" src="scripts/script.js" defer></script>
     <script type="module" src="scripts/actions.js" defer></script>
-    <script src="https://kit.fontawesome.com/c3cff5abce.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/c3cff5abce.js" crossorigin="anonymous" defer></script>
 </head>
 <body>
     <!-- Skip Navigation for Accessibility -->
@@ -171,7 +180,7 @@
         <nav aria-label="Footer navigation">
             <a href="#" aria-label="Game rules and instructions">Rules</a>
             <a href="#" aria-label="About Zero Cutter">About</a>
-            <a href="#" aria-label="Contact us">Contact</a>
+            <a href="https://github.com/nihaltp/zerocutter" aria-label="Contact us">Contact</a>
         </nav>
     </footer>
 </body>
