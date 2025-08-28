@@ -10,74 +10,169 @@
     <script src="https://kit.fontawesome.com/c3cff5abce.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- MARK: Popup -->
-    <div class="popup" id="popupPlayers">
+    <!-- Skip Navigation for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header with Game Title -->
+    <header role="banner">
+        <h1 class="game-title visually-hidden">Zero Cutter - Multiplayer Strategy Game</h1>
+    </header>
+    
+    <!-- Main Content Area -->
+    <main id="main-content" role="main">
+        <!-- Game Setup Modal -->
+        <section class="popup" id="popupPlayers" aria-modal="true" role="dialog" aria-labelledby="game-setup-title">
+            <div class="popup-content">
+                <!-- Game Instructions -->
+                <article id="gameInstruction" aria-labelledby="game-instructions-title">
+                    <h2 id="game-instructions-title">🎮 Welcome to Zero Cutter!</h2>
+                    <div class="game-description">
+                        <p>
+                            Zero Cutter is a multiplayer strategy game where tactical thinking meets competitive fun.
+                        </p>
+                        <h3>How to Play:</h3>
+                        <ul class="game-rules">
+                            <li>On each turn, you can mark one circle in the triangle</li>
+                            <li>If you mark the <strong>last circle</strong> in any row, column, or diagonal, you earn points</li>
+                            <li>The game continues until there are no circles left</li>
+                            <li>The player with the <strong>highest score</strong> at the end wins! 🏆</li>
+                        </ul>
+                    </div>
+                    <button id="okBtn" class="primary-btn" aria-label="Continue to player setup">
+                        Start Setup
+                    </button>
+                </article>
+                
+                <!-- Player Count Input -->
+                <form id="playerInput" class="hidden" aria-labelledby="player-count-title">
+                    <h3 id="player-count-title">Player Setup</h3>
+                    <label for="players">Enter number of players (2-8 recommended):</label>
+                    <input type="number" 
+                           id="players" 
+                           min="2" 
+                           max="8"
+                           placeholder="e.g. 2"
+                           aria-describedby="players-help"
+                           required>
+                    <small id="players-help" class="help-text">Choose between 2-8 players for optimal gameplay</small>
+                    <button type="button" id="nextBtn" class="primary-btn">Next Step</button>
+                    <p id="messagePlayers" class="message error-message" role="alert" aria-live="polite"></p>
+                </form>
+                
+                <!-- Triangle Size Input -->
+                <form id="triangleInput" class="hidden" aria-labelledby="triangle-size-title">
+                    <h3 id="triangle-size-title">🔺 Triangle Setup</h3>
+                    <p>Choose the size of the triangle for your game. Larger triangles create longer, more strategic games.</p>
+                    <label for="triangleSize">Enter triangle size:</label>
+                    <input type="number" 
+                           id="triangleSize" 
+                           min="3" 
+                           placeholder="e.g. 5"
+                           aria-describedby="triangle-help"
+                           required>
+                    <small id="triangle-help" class="help-text">Minimum size depends on number of players</small>
+                    <button type="button" id="startBtn" class="primary-btn">Start Game</button>
+                    <p id="messageTriangle" class="message error-message" role="alert" aria-live="polite"></p>
+                </form>
+            </div>
+        </section>
+
+        <!-- Game Board Layout -->
+        <section class="container hidden" id="gameBoard" aria-label="Zero Cutter Game Board">
+            <!-- Player Statistics Panel -->
+            <aside class="left-panel" id="playerTableContainer" role="complementary" aria-label="Player Statistics">
+                <h2 class="panel-title">Player Scores</h2>
+                <div class="table-container">
+                    <table id="playerTable" 
+                           role="table" 
+                           aria-label="Current player scores and information"
+                           summary="Shows player names, current scores, and assigned colors">
+                        <!-- Table content will be populated by JavaScript -->
+                    </table>
+                </div>
+            </aside>
+
+            <!-- Game Triangle Area -->
+            <section class="center-panel" role="main" aria-label="Game Triangle">
+                <h2 class="visually-hidden">Game Triangle - Click circles to play</h2>
+                <div id="triangleContainer" 
+                     role="grid" 
+                     aria-label="Game triangle with clickable circles"
+                     tabindex="0">
+                    <!-- Triangle will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Game Controls Panel -->
+            <aside class="right-panel" role="complementary" aria-label="Game Controls">
+                <div class="current-player" id="currentPlayerDisplay">
+                    <h3>Current Turn</h3>
+                    <div class="player-info" role="status" aria-live="polite">
+                        <span id="currentPlayerName" class="player-name">Player 1</span>
+                        <span class="color-box" 
+                              id="currentPlayerColor"
+                              role="img"
+                              aria-label="Current player color indicator"></span>
+                    </div>
+                </div>
+                <nav class="actions" aria-label="Game actions">
+                    <button class="btn" 
+                            id="undoBtn" 
+                            aria-label="Undo last move"
+                            title="Undo your last move">
+                        <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 
+                        <span>Undo</span>
+                    </button>
+                    <button class="btn" 
+                            id="redoBtn" 
+                            aria-label="Redo last undone move"
+                            title="Redo your last undone move">
+                        <i class="fa-solid fa-rotate-right" aria-hidden="true"></i> 
+                        <span>Redo</span>
+                    </button>
+                </nav>
+            </aside>
+        </section>
+    </main>
+
+    <!-- Game Over Modal -->
+    <section class="popup hidden" 
+             id="popupWinner" 
+             aria-modal="true" 
+             role="dialog" 
+             aria-labelledby="game-over-title">
         <div class="popup-content">
-            <div id="gameInstruction">
-                <h2>🎮 Welcome to Zero Cutter!</h2>
-                <p>
-                    Zero Cutter is a multiplayer strategy game. <br><br>
-                    ➡️ On each turn, you can mark one circle. <br>
-                    ➡️ If you mark the <b>last circle</b> in any row, column, or diagonal, you earn points. <br>
-                    ➡️ The game continues until there are no circles left. <br>
-                    ➡️ The player with the <b>highest score</b> at the end wins! 🏆
-                </p>
-                <button id="okBtn">OK</button>
-            </div>
-            <div id="playerInput" class="hidden">
-                <label for="players">Enter number of players:</label>
-                <input type="number" id="players" min="1" placeholder="e.g. 2">
-                <button id="nextBtn">Next</button>
-            </div>
-            <p id="messagePlayers" class="message"></p>
-            <div id="triangleInput" class="hidden">
-                <h2>🔺 Triangle Setup</h2>
-                <p>Now, choose the size of the triangle for the game.</p>
-                <label for="triangleSize">Enter triangle size:</label>
-                <input type="number" id="triangleSize" min="2" placeholder="e.g. 5">
-                <button id="startBtn">Start Game</button>
-                <p id="messageTriangle" class="message"></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Game Layout -->
-    <div class="container hidden" id="gameBoard">
-        <!-- Left: Player Table -->
-        <div class="left-panel" id="playerTableContainer">
-            <table id="playerTable"></table>
-        </div>
-
-        <!-- Center: Triangle -->
-        <div class="center-panel" id="triangleContainer"></div>
-
-        <!-- Right: Current Player + Undo/Redo -->
-        <div class="right-panel">
-            <div class="current-player" id="currentPlayerDisplay">
-                <p><strong>Current Player:</strong></p>
-                <div class="player-info">
-                    <span id="currentPlayerName">Player 1</span>
-                    <span class="color-box" id="currentPlayerColor"></span>
+            <header>
+                <h2 id="game-over-title">🏆 Game Over!</h2>
+            </header>
+            <div class="winner-announcement">
+                <p id="winnerMessage" class="winner-text" role="status">Winner: Player 1</p>
+                <div class="winner-info" aria-label="Winner details">
+                    <span id="winnerColor" 
+                          class="color-box winner-color"
+                          role="img"
+                          aria-label="Winner's color"></span>
+                    <span id="winnerScore" class="winner-score">Score: 0</span>
                 </div>
             </div>
-            <div class="actions">
-                <button class="btn" id="undoBtn"><i class="fa-solid fa-rotate-left"></i> Undo</button>
-                <button class="btn" id="redoBtn"><i class="fa-solid fa-rotate-right"></i> Redo</button>
-            </div>
+            <footer class="modal-footer">
+                <button id="restartBtn" 
+                        class="primary-btn"
+                        aria-label="Start a new game">
+                    Play Again
+                </button>
+            </footer>
         </div>
-    </div>
-    <!-- MARK: Winner Popup
-    -->
-    <div class="popup hidden" id="popupWinner">
-        <div class="popup-content">
-            <h2>🏆 Game Over!</h2>
-            <p id="winnerMessage">Winner: Player 1</p>
-            <div class="winner-info">
-                <span id="winnerColor" class="color-box"></span>
-                <span id="winnerScore">Score: 0</span>
-            </div>
-            <button id="restartBtn">Play Again</button>
-        </div>
-    </div>
+    </section>
+
+    <!-- Footer -->
+    <footer role="contentinfo" class="game-footer">
+        <p>&copy; 2025 Zero Cutter Game. A strategic multiplayer experience.</p>
+        <nav aria-label="Footer navigation">
+            <a href="#" aria-label="Game rules and instructions">Rules</a>
+            <a href="#" aria-label="About Zero Cutter">About</a>
+            <a href="#" aria-label="Contact us">Contact</a>
+        </nav>
+    </footer>
 </body>
 </html>
