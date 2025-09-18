@@ -116,7 +116,7 @@ function processCircleClick(sets, num, player) {
     checkTotalScore();
     
     // Switch to next player
-    if (score === 0) currentPlayer = (currentPlayer % playerCount) + 1;
+    currentPlayer = (currentPlayer % playerCount) + 1;
     updateCurrentPlayer();
 }
 
