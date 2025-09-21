@@ -16,7 +16,12 @@ function editPlayerName(index) {
 
 // Save Player Name
 function saveName(index, newName) {
-    localStorage.setItem(`playerName${index}`, newName);
+    const savedColor = JSON.parse(localStorage.getItem(`player${index}`)) || {};
+    const userData = {
+        name: newName,
+        color: savedColor.color || ""
+    }
+    localStorage.setItem(`player${index}`, JSON.stringify(userData));
 }
 
 // Change Player Color
@@ -33,9 +38,20 @@ function changePlayerColor(index) {
             players[index].color = input.value;
             renderPlayerTable();
             updateCurrentPlayer();
+            saveColor(index, input.value);
             changeColor(previousColor, input.value);
         }
     });
+}
+
+// Save Player Color
+function saveColor(index, newColor) {
+    const savedName = JSON.parse(localStorage.getItem(`player${index}`)) || {};
+    const userData = {
+        name: savedName.name || "",
+        color: newColor
+    }
+    localStorage.setItem(`player${index}`, JSON.stringify(userData));
 }
 
 // Change all circle colors to match the new color

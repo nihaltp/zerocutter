@@ -29,7 +29,7 @@ export function triangleClick(playerInputDiv) {
         let newPlayers = Array.from({ length: playerCount }, (_, i) => ({
             name: loadName(i) || `Player ${i + 1}`,
             score: 0,
-            color: getRandomColor()
+            color: loadColor(i) || getRandomColor()
         }));
         setPlayers(newPlayers);
         
@@ -63,9 +63,17 @@ export function triangleClick(playerInputDiv) {
 
 // Load Player Name
 function loadName(index) {
-    const savedName = localStorage.getItem(`playerName${index}`);
-    if (savedName !== null && savedName.trim() !== "") {
-        return savedName;
+    const savedData = JSON.parse(localStorage.getItem(`player${index}`));
+    if (savedData !== null && (savedData.name).trim() !== "") {
+        return savedData.name;
+    }
+}
+
+// Load Player Color
+function loadColor(index) {
+    const savedData = JSON.parse(localStorage.getItem(`player${index}`));
+    if (savedData !== null && (savedData.color).trim() !== "") {
+        return savedData.color;
     }
 }
 
