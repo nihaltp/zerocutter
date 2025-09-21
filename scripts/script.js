@@ -31,7 +31,7 @@ export function renderPlayerTable() {
         <tr>
             ${players.map((p, i) => `
                 <th class="player-header">
-                    <span id="name-${i}">${p.name}</span>
+                    <span id="name-${i}" onclick="editPlayerName(${i})">${p.name}</span>
                     <i class="fa-solid fa-pen-to-square" onclick="editPlayerName(${i})"></i>
                 </th>`).join('')}
         </tr>
