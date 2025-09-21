@@ -27,7 +27,7 @@ export function triangleClick(playerInputDiv) {
     
     if (playerCount && playerCount > 0) {
         let newPlayers = Array.from({ length: playerCount }, (_, i) => ({
-            name: `Player ${i + 1}`,
+            name: loadName(i) || `Player ${i + 1}`,
             score: 0,
             color: getRandomColor()
         }));
@@ -59,7 +59,14 @@ export function triangleClick(playerInputDiv) {
             startClick();
         }
     });
+}
 
+// Load Player Name
+function loadName(index) {
+    const savedName = localStorage.getItem(`playerName${index}`);
+    if (savedName !== null && savedName.trim() !== "") {
+        return savedName;
+    }
 }
 
 export function startClick() {

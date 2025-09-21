@@ -10,7 +10,13 @@ function editPlayerName(index) {
         players[index].name = newName;
         renderPlayerTable();
         updateCurrentPlayer();
+        saveName(index, newName);
     }
+}
+
+// Save Player Name
+function saveName(index, newName) {
+    localStorage.setItem(`playerName${index}`, newName);
 }
 
 // Change Player Color
